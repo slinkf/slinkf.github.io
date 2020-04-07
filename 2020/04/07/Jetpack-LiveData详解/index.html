@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    LifeCycles解析 |  Hexo
+    Jetpack-LiveData详解 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -36,7 +36,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-LifeCycles解析" class="article article-type-post" itemscope
+  <article id="post-Jetpack-LiveData详解" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  LifeCycles解析
+  Jetpack-LiveData详解
 </h1>
  
 
@@ -53,8 +53,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" class="article-date">
-  <time datetime="2020-04-06T15:53:31.280Z" itemprop="datePublished">2020-04-06</time>
+      <a href="/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2020-04-07T06:54:56.478Z" itemprop="datePublished">2020-04-07</time>
 </a>
       
       
@@ -64,7 +64,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">541字</span>
+            <span class="post-count">796字</span>
         </span>
     </span>
 
@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">2分钟</span>
         </span>
     </span>
 </div>
@@ -98,34 +98,45 @@
       
 
       
-      <h1 id="LifeCycles解析"><a href="#LifeCycles解析" class="headerlink" title="LifeCycles解析"></a>LifeCycles解析</h1><ol>
-<li>什么是LifeCycle?为什么会出现LifeCycle这种组件?</li>
-<li>LifeCycles实现原理</li>
-<li>更合理的使用LifeCycles 为什么第三方框架Glide不用LifeCycle管理生命周期?</li>
+      <h2 id="Jetpack-LiveData详解"><a href="#Jetpack-LiveData详解" class="headerlink" title="Jetpack-LiveData详解"></a>Jetpack-LiveData详解</h2><ol>
+<li>LiveData作用 为什么要使用LiveData</li>
+<li>LiveData实现原理</li>
+<li>利用LiveData实现事件总线的功能</li>
 </ol>
-<p><a href=""https://developer.android.com/topic/libraries/architecture/lifecycle"">LifeCycle官网</a>Lifecycles的基本使用可以参考这里</p>
-<h3 id="什么是LifeCycles"><a href="#什么是LifeCycles" class="headerlink" title="什么是LifeCycles"></a>什么是LifeCycles</h3><p>LifeCycles生命周期感知组件 可以感知Activity和fragment 的生命周期变化,这样的组件有利于写出更有条理且往往更精简的代码,这样的代码也更易于维护</p>
-<p>一种常见的模式是在 Activity 和 Fragment 的生命周期方法中实现依赖组件的操作。但是，这种模式会导致代码条理性很差而且会扩散错误。通过使用生命周期感知型组件，您可以将依赖组件的代码从生命周期方法移入组件本身中。</p>
-<p><a href="https://developer.android.com/reference/androidx/lifecycle/package-summary" target="_blank" rel="noopener"><code>androidx.lifecycle</code></a> 软件包提供了可用于构建生命周期感知型组件的类和接口 - 这些组件可以根据 Activity 或 Fragment 的当前生命周期状态自动调整其行为</p>
-<h3 id="LifeCycles实现原理"><a href="#LifeCycles实现原理" class="headerlink" title="LifeCycles实现原理"></a>LifeCycles实现原理</h3><p>简单概括 Fragment监听生命周期 + 反射 + 注解</p>
-<p><img src="http://www.plantuml.com/plantuml/png/lLHTRjim37xNAVIOR6qF40H3ZSm50hHrORiO-ZGeCfrei2L3PZmKNK-oK-nvm6upx1fJw4ffeXRONleYY-H7VloXTTwZiBXj6rOkoykKNweQ5lUoWJy_Vlx-_einfH5iBIIGIUvCsLSDze5npjU0GJkPpiATFJB6P2FwVk-LmrhrQE_9aRVPgWSxWBqItUn2z5Y86fQEIgmQSBfvyFF04-vldnHk2XG87oYKg2flcOJqlMOw6uog26UXDGFy0vJgMcoj1Ot4uqgZBzasGbSDXFJImQ4cT4vtPOkLAr98v4VbFvMztBLJYwQGfeCSwbc2fbNItS3HIPXdgoyWySqhU_Jpog4p5Y-iMBSEnCUqAzLt0kNcMPsWjoqdSOHarvyNUPgKwOaNYpB9oo3bQN5xjJVU9BV5SsXs4uIFQL7csLsGa-kxVNeBqtP6EzP4eXeKFgrJPzKW47YjN6zv6otTBDAGs_l_M62broDNSp3wqFLnS6ECs1mgYBVuWLDOMWzI-6NpokXNU8KZU4GKaoW4D-6t8WHNMg4I3GbJ7oaCVjpomnU06tSwVx9ns9tZeb7pZh3pRsTdyV1OfE7lJa_ZD-DbtD6kxYaTsujHehvuDZzW5laG8l9ZXyol97qEkd8lwry0" alt="类图奉上"></p>
-<p>这里主要需要看到的地方有 </p>
-<p><strong>ComponetActivity</strong></p>
-<p><strong>LifeCycleRegistry</strong></p>
-<p><strong>ReportFragment</strong></p>
-<p>就是这三个角色玩活了Android的生命周期</p>
-<p><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</p>
-<p><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</p>
-<p><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</p>
-<p><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></p>
-<p><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</p>
-<p>当发生一次生命周期的变化时 由以下顺序调用</p>
-<p><strong>ReportFragment</strong> –&gt;dispatch()   </p>
-<p><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</p>
-<p><strong>ObserverWithState</strong> –&gt;dispatchEvent()</p>
-<p><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</p>
-<h3 id="为什么第三方框架Glide不用LifeCycle管理生命周期"><a href="#为什么第三方框架Glide不用LifeCycle管理生命周期" class="headerlink" title="为什么第三方框架Glide不用LifeCycle管理生命周期"></a>为什么第三方框架Glide不用LifeCycle管理生命周期</h3><p>原因很简单 看过<strong>ReportFragment</strong>就知道了 利用fragment管理生命周期相当方便 Glide 当然会选择直接自己创建fragment的方式去管理生命周期了</p>
-
+<p><a href="https://developer.android.com/topic/libraries/architecture/livedata" target="_blank" rel="noopener">LiveData官网</a></p>
+<h4 id="LiveData作用"><a href="#LiveData作用" class="headerlink" title="LiveData作用"></a>LiveData作用</h4><blockquote>
+<p><a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 Activity、Fragment 或 Service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。</p>
+<p><strong>注意</strong>：要将 LiveData 组件导入您的 Android 项目，请参阅<a href="https://developer.android.com/topic/libraries/architecture/adding-components#lifecycle" target="_blank" rel="noopener">向项目添加组件</a>。</p>
+<p>如果观察者（由 <a href="https://developer.android.com/reference/androidx/lifecycle/Observer" target="_blank" rel="noopener"><code>Observer</code></a> 类表示）的生命周期处于 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#STARTED" target="_blank" rel="noopener"><code>STARTED</code></a> 或 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#RESUMED" target="_blank" rel="noopener"><code>RESUMED</code></a> 状态，则 LiveData 会认为该观察者处于活跃状态。LiveData 只会将更新通知给活跃的观察者。为观察 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象而注册的非活跃观察者不会收到更改通知。</p>
+<p>您可以注册与实现 <a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner" target="_blank" rel="noopener"><code>LifecycleOwner</code></a> 接口的对象配对的观察者。有了这种关系，当相应的 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle" target="_blank" rel="noopener"><code>Lifecycle</code></a> 对象的状态变为 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#DESTROYED" target="_blank" rel="noopener"><code>DESTROYED</code></a> 时，便可移除此观察者。 这对于 Activity 和 Fragment 特别有用，因为它们可以放心地观察 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象而不必担心泄露（当 Activity 和 Fragment 的生命周期被销毁时，系统会立即退订它们）。</p>
+<p>要详细了解如何使用 LiveData，请参阅<a href="https://developer.android.com/topic/libraries/architecture/livedata#work_livedata" target="_blank" rel="noopener">使用 LiveData 对象</a>。</p>
+<p>使用 LiveData 的优势</p>
+<p>使用 LiveData 具有以下优势：</p>
+<ul>
+<li><p><strong>确保界面符合数据状态</strong></p>
+<p>LiveData 遵循观察者模式。当生命周期状态发生变化时，LiveData 会通知 <a href="https://developer.android.com/reference/androidx/lifecycle/Observer" target="_blank" rel="noopener"><code>Observer</code></a> 对象。您可以整合代码以在这些 <code>Observer</code> 对象中更新界面。观察者可以在每次发生更改时更新界面，而不是在每次应用数据发生更改时更新界面。</p>
+</li>
+<li><p><strong>不会发生内存泄露</strong></p>
+<p>观察者会绑定到 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle" target="_blank" rel="noopener"><code>Lifecycle</code></a> 对象，并在其关联的生命周期遭到销毁后进行自我清理。</p>
+</li>
+<li><p><strong>不会因 Activity 停止而导致崩溃</strong></p>
+<p>如果观察者的生命周期处于非活跃状态（如返回栈中的 Activity），则它不会接收任何 LiveData 事件。</p>
+</li>
+<li><p><strong>不再需要手动处理生命周期</strong></p>
+<p>界面组件只是观察相关数据，不会停止或恢复观察。LiveData 将自动管理所有这些操作，因为它在观察时可以感知相关的生命周期状态变化。</p>
+</li>
+<li><p><strong>数据始终保持最新状态</strong></p>
+<p>如果生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，曾经在后台的 Activity 会在返回前台后立即接收最新的数据。</p>
+</li>
+<li><p><strong>适当的配置更改</strong></p>
+<p>如果由于配置更改（如设备旋转）而重新创建了 Activity 或 Fragment，它会立即接收最新的可用数据。</p>
+</li>
+<li><p><strong>共享资源</strong></p>
+<p>您可以使用单一实例模式扩展 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象以封装系统服务，以便在应用中共享它们。<code>LiveData</code> 对象连接到系统服务一次，然后需要相应资源的任何观察者只需观察 <code>LiveData</code> 对象。有关详情，请参阅<a href="https://developer.android.com/topic/libraries/architecture/livedata#extend_livedata" target="_blank" rel="noopener">扩展 LiveData</a>。</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="LiveData实现原理"><a href="#LiveData实现原理" class="headerlink" title="LiveData实现原理"></a>LiveData实现原理</h4>
       
       <!-- reward -->
       
@@ -194,7 +205,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -210,19 +221,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Jetpack-LiveData详解
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/04/02/hexo%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+      <a href="/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">hexo使用</div>
+        <div class="article-nav-title">LifeCycles解析</div>
       </a>
     
   </nav>
