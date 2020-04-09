@@ -45,7 +45,7 @@
     
   <div class="cover-frame">
     <div class="bg-box">
-      <img src="/images/cover1.jpg" alt="image frame" />
+      <img src="/images/cover4.jpg" alt="image frame" />
     </div>
     <div class="cover-inner text-center text-white">
       <h1><a href="/">Hexo</a></h1>
@@ -114,7 +114,6 @@
       <h2 id="Jetpack-LiveData详解"><a href="#Jetpack-LiveData详解" class="headerlink" title="Jetpack-LiveData详解"></a>Jetpack-LiveData详解</h2><ol>
 <li>LiveData作用 为什么要使用LiveData</li>
 <li>LiveData实现原理</li>
-<li>利用LiveData实现事件总线的功能</li>
 </ol>
 <p><a href="https://developer.android.com/topic/libraries/architecture/livedata" target="_blank" rel="noopener">LiveData官网</a></p>
 <h4 id="LiveData作用"><a href="#LiveData作用" class="headerlink" title="LiveData作用"></a>LiveData作用</h4><blockquote>
@@ -149,7 +148,24 @@
 </li>
 </ul>
 </blockquote>
-<h4 id="LiveData实现原理"><a href="#LiveData实现原理" class="headerlink" title="LiveData实现原理"></a>LiveData实现原理</h4>
+<h4 id="LiveData实现原理"><a href="#LiveData实现原理" class="headerlink" title="LiveData实现原理"></a>LiveData实现原理</h4><p>简单总结  LifeCycle监听生命周期变化+Version进行数据版本控制</p>
+<p><img src="http://www.plantuml.com/plantuml/png/XLDBZjD04Dtx5BNCeCc2xP09au4WHGeJQMA59IftboUD-cDrbpr4Y9Dm2jP8t0Pn3Tp-vED9nChgUg_glNxLlWkCdakZatIHBkUmL1L9PFpxyzUV7xyJp09x50n2OmWD-hv69-aKlYK0K3cDh3J1Alj2DSr4z4r40jU0W5nPrA0impgTFQQVD_F7zMBr0BSmVjtmrfZJWibZfkaZ5fDL5iXNv2Tl8PG5UKYdrz0NFtaiwjeKJ5y9SKOSRpRrGJaBjwTAhHdY3UgIHkdLJUMKZBN2XPT5gKA1BBRAFhNOGFd05Cu69Sa_E5RvxZBFTS1egN8IEw5fzMp9Nv-vvzKH_uFp5BlEqhudmyKCv9lTd6azv1O9cNEQq8AP2LOLxPDSOk0BQKPEBxtl3rjNQdbFxPXHuw-rDTFFk0jjlLS6-ifavKlF48SFPzrq8ermKripChtRedqYEUhGBkwzxZxhUrTQ-JzbKARGPCZoKUUygiyTCURPlUJJBO9fFl6DNGm3e2WphGH4Y-3iiV_eM5acdwEWmyBIQItOqVkRfasi_Gy8hyRZuJMImVc4SzfvFf_aZgmiZVu7" alt="图片"></p>
+<p>重点看以下几个类</p>
+<p><strong>Observer</strong>调用<strong>observer(LifecycleOwner,Observer)</strong>传入的观察者接口</p>
+<p><strong>ObserverWrapper</strong>对<strong>Observer</strong>进行进一步包装</p>
+<p><strong>LifecycleBoundObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现依赖生命周期 监听数据</p>
+<p><strong>AlwaysActiveObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现不依赖生命周期 监听数据</p>
+<p>以下几个方法</p>
+<p><strong>LiveData.observer(LifecycleOwner,Observer)</strong>  把传入的<strong>LifecycleOwner和Observer</strong> 包装成<strong>LifecycleBoundObserver</strong> 实现依赖生命周期监听数据变化</p>
+<p><strong>LiveData.observeForever(Observer)</strong> 把传入的<strong>Observer</strong>包装成 <strong>AlwaysActiveObserver</strong>实现不依赖生命周期监听数据变化</p>
+<p>赋值/数据下发 执行顺序 </p>
+<p>通过<strong>LiveData.setValue</strong>设置数据</p>
+<p>调用<strong>LiveData.dispatchingValue()</strong> 拿到<strong>Observser</strong>实现类 </p>
+<p>再调用<strong>LiveData.considerNotify()</strong> 通过<strong>mActive</strong>状态和 <strong>version</strong> 判断版本是否下发数据</p>
+<p>新增<strong>Observer</strong>执行顺序</p>
+<p>通过<strong>LiveData.observer(LifecycleOwner,Observer)</strong> 新增一个带lifeCycle 的观察对象 </p>
+<p>通过<strong>LiveData.observeForever(Observer)</strong>新增一个不依赖lifeCycle的观察对象</p>
+
       
       <!-- reward -->
       
@@ -319,82 +335,6 @@
 <li><p>Theme 定制风格</p>
 </li>
 </ol>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
-    <article id="post-hello-world" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/03/29/hello-world/"
-    >Hello World</a> 
-</h2>
- 
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/03/29/hello-world/" class="article-date">
-  <time datetime="2020-03-28T16:32:54.544Z" itemprop="datePublished">2020-03-29</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-
-      
-      <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
       <!-- reward -->
