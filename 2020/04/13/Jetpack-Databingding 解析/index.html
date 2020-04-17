@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    LifeCycles解析 |  Hexo
+    Jetpack-Databingding 解析 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -36,7 +36,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-LifeCycles解析" class="article article-type-post" itemscope
+  <article id="post-Jetpack-Databingding 解析" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  LifeCycles解析
+  Jetpack-Databingding 解析
 </h1>
  
 
@@ -53,8 +53,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" class="article-date">
-  <time datetime="2020-04-06T15:53:31.280Z" itemprop="datePublished">2020-04-06</time>
+      <a href="/2020/04/13/Jetpack-Databingding%20%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2020-04-13T09:13:52.980Z" itemprop="datePublished">2020-04-13</time>
 </a>
       
       
@@ -64,7 +64,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">541字</span>
+            <span class="post-count">4字</span>
         </span>
     </span>
 
@@ -98,34 +98,7 @@
       
 
       
-      <h1 id="LifeCycles解析"><a href="#LifeCycles解析" class="headerlink" title="LifeCycles解析"></a>LifeCycles解析</h1><ol>
-<li>什么是LifeCycle?为什么会出现LifeCycle这种组件?</li>
-<li>LifeCycles实现原理</li>
-<li>更合理的使用LifeCycles 为什么第三方框架Glide不用LifeCycle管理生命周期?</li>
-</ol>
-<p><a href=""https://developer.android.com/topic/libraries/architecture/lifecycle"">LifeCycle官网</a>Lifecycles的基本使用可以参考这里</p>
-<h3 id="什么是LifeCycles"><a href="#什么是LifeCycles" class="headerlink" title="什么是LifeCycles"></a>什么是LifeCycles</h3><p>LifeCycles生命周期感知组件 可以感知Activity和fragment 的生命周期变化,这样的组件有利于写出更有条理且往往更精简的代码,这样的代码也更易于维护</p>
-<p>一种常见的模式是在 Activity 和 Fragment 的生命周期方法中实现依赖组件的操作。但是，这种模式会导致代码条理性很差而且会扩散错误。通过使用生命周期感知型组件，您可以将依赖组件的代码从生命周期方法移入组件本身中。</p>
-<p><a href="https://developer.android.com/reference/androidx/lifecycle/package-summary" target="_blank" rel="noopener"><code>androidx.lifecycle</code></a> 软件包提供了可用于构建生命周期感知型组件的类和接口 - 这些组件可以根据 Activity 或 Fragment 的当前生命周期状态自动调整其行为</p>
-<h3 id="LifeCycles实现原理"><a href="#LifeCycles实现原理" class="headerlink" title="LifeCycles实现原理"></a>LifeCycles实现原理</h3><p>简单概括 Fragment监听生命周期 + 反射 + 注解</p>
-<p><img src="http://www.plantuml.com/plantuml/png/lLHTRjim37xNAVIOR6qF40H3ZSm50hHrORiO-ZGeCfrei2L3PZmKNK-oK-nvm6upx1fJw4ffeXRONleYY-H7VloXTTwZiBXj6rOkoykKNweQ5lUoWJy_Vlx-_einfH5iBIIGIUvCsLSDze5npjU0GJkPpiATFJB6P2FwVk-LmrhrQE_9aRVPgWSxWBqItUn2z5Y86fQEIgmQSBfvyFF04-vldnHk2XG87oYKg2flcOJqlMOw6uog26UXDGFy0vJgMcoj1Ot4uqgZBzasGbSDXFJImQ4cT4vtPOkLAr98v4VbFvMztBLJYwQGfeCSwbc2fbNItS3HIPXdgoyWySqhU_Jpog4p5Y-iMBSEnCUqAzLt0kNcMPsWjoqdSOHarvyNUPgKwOaNYpB9oo3bQN5xjJVU9BV5SsXs4uIFQL7csLsGa-kxVNeBqtP6EzP4eXeKFgrJPzKW47YjN6zv6otTBDAGs_l_M62broDNSp3wqFLnS6ECs1mgYBVuWLDOMWzI-6NpokXNU8KZU4GKaoW4D-6t8WHNMg4I3GbJ7oaCVjpomnU06tSwVx9ns9tZeb7pZh3pRsTdyV1OfE7lJa_ZD-DbtD6kxYaTsujHehvuDZzW5laG8l9ZXyol97qEkd8lwry0" alt="类图奉上"></p>
-<p>这里主要需要看到的地方有 </p>
-<p><strong>ComponetActivity</strong></p>
-<p><strong>LifeCycleRegistry</strong></p>
-<p><strong>ReportFragment</strong></p>
-<p>就是这三个角色玩活了Android的生命周期</p>
-<p><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</p>
-<p><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</p>
-<p><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</p>
-<p><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></p>
-<p><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</p>
-<p>当发生一次生命周期的变化时 由以下顺序调用</p>
-<p><strong>ReportFragment</strong> –&gt;dispatch()   </p>
-<p><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</p>
-<p><strong>ObserverWithState</strong> –&gt;dispatchEvent()</p>
-<p><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</p>
-<h3 id="为什么第三方框架Glide不用LifeCycle管理生命周期"><a href="#为什么第三方框架Glide不用LifeCycle管理生命周期" class="headerlink" title="为什么第三方框架Glide不用LifeCycle管理生命周期"></a>为什么第三方框架Glide不用LifeCycle管理生命周期</h3><p>原因很简单 看过<strong>ReportFragment</strong>就知道了 利用fragment管理生命周期相当方便 Glide 当然会选择直接自己创建fragment的方式去管理生命周期了</p>
-
+      <h2 id="Jetpack-Databingding-解析"><a href="#Jetpack-Databingding-解析" class="headerlink" title="Jetpack-Databingding 解析"></a>Jetpack-Databingding 解析</h2>
       
       <!-- reward -->
       
@@ -190,7 +163,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/13/Jetpack-Databingding%20%E8%A7%A3%E6%9E%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -206,19 +179,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
+      <a href="/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Jetpack-LiveData详解
+            小程序
           
         </div>
       </a>
     
     
-      <a href="/2020/04/02/hexo%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+      <a href="/2020/04/10/Jetpack-ViewModel%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">hexo使用</div>
+        <div class="article-nav-title">Jetpack-ViewModel详解</div>
       </a>
     
   </nav>

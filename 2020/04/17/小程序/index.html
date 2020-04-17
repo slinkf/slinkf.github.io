@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Jetpack-LiveData详解 |  Hexo
+    小程序 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -36,7 +36,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-Jetpack-LiveData详解" class="article article-type-post" itemscope
+  <article id="post-小程序" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Jetpack-LiveData详解
+  小程序
 </h1>
  
 
@@ -53,8 +53,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2020-04-07T06:54:56.478Z" itemprop="datePublished">2020-04-07</time>
+      <a href="/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="article-date">
+  <time datetime="2020-04-17T01:39:37.767Z" itemprop="datePublished">2020-04-17</time>
 </a>
       
       
@@ -64,7 +64,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1k字</span>
+            <span class="post-count">1.3k字</span>
         </span>
     </span>
 
@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">4分钟</span>
         </span>
     </span>
 </div>
@@ -98,60 +98,46 @@
       
 
       
-      <h2 id="Jetpack-LiveData详解"><a href="#Jetpack-LiveData详解" class="headerlink" title="Jetpack-LiveData详解"></a>Jetpack-LiveData详解</h2><ol>
-<li>LiveData作用 为什么要使用LiveData</li>
-<li>LiveData实现原理</li>
+      <h2 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h2><h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ol>
+<li><p>什么是小程序?</p>
+</li>
+<li><p>小程序的发展历史</p>
+</li>
+<li><p>小程序,App 之间有哪些区别</p>
+</li>
+<li><p>目前实现小程序的实现方式有哪些?(两种)</p>
+</li>
+<li><p>两种实现方式 有哪些优缺点</p>
+</li>
 </ol>
-<p><a href="https://developer.android.com/topic/libraries/architecture/livedata" target="_blank" rel="noopener">LiveData官网</a></p>
-<h4 id="LiveData作用"><a href="#LiveData作用" class="headerlink" title="LiveData作用"></a>LiveData作用</h4><blockquote>
-<p><a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 是一种可观察的数据存储器类。与常规的可观察类不同，LiveData 具有生命周期感知能力，意指它遵循其他应用组件（如 Activity、Fragment 或 Service）的生命周期。这种感知能力可确保 LiveData 仅更新处于活跃生命周期状态的应用组件观察者。</p>
-<p><strong>注意</strong>：要将 LiveData 组件导入您的 Android 项目，请参阅<a href="https://developer.android.com/topic/libraries/architecture/adding-components#lifecycle" target="_blank" rel="noopener">向项目添加组件</a>。</p>
-<p>如果观察者（由 <a href="https://developer.android.com/reference/androidx/lifecycle/Observer" target="_blank" rel="noopener"><code>Observer</code></a> 类表示）的生命周期处于 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#STARTED" target="_blank" rel="noopener"><code>STARTED</code></a> 或 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#RESUMED" target="_blank" rel="noopener"><code>RESUMED</code></a> 状态，则 LiveData 会认为该观察者处于活跃状态。LiveData 只会将更新通知给活跃的观察者。为观察 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象而注册的非活跃观察者不会收到更改通知。</p>
-<p>您可以注册与实现 <a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner" target="_blank" rel="noopener"><code>LifecycleOwner</code></a> 接口的对象配对的观察者。有了这种关系，当相应的 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle" target="_blank" rel="noopener"><code>Lifecycle</code></a> 对象的状态变为 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.State#DESTROYED" target="_blank" rel="noopener"><code>DESTROYED</code></a> 时，便可移除此观察者。 这对于 Activity 和 Fragment 特别有用，因为它们可以放心地观察 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象而不必担心泄露（当 Activity 和 Fragment 的生命周期被销毁时，系统会立即退订它们）。</p>
-<p>要详细了解如何使用 LiveData，请参阅<a href="https://developer.android.com/topic/libraries/architecture/livedata#work_livedata" target="_blank" rel="noopener">使用 LiveData 对象</a>。</p>
-<p>使用 LiveData 的优势</p>
-<p>使用 LiveData 具有以下优势：</p>
-<ul>
-<li><p><strong>确保界面符合数据状态</strong></p>
-<p>LiveData 遵循观察者模式。当生命周期状态发生变化时，LiveData 会通知 <a href="https://developer.android.com/reference/androidx/lifecycle/Observer" target="_blank" rel="noopener"><code>Observer</code></a> 对象。您可以整合代码以在这些 <code>Observer</code> 对象中更新界面。观察者可以在每次发生更改时更新界面，而不是在每次应用数据发生更改时更新界面。</p>
-</li>
-<li><p><strong>不会发生内存泄露</strong></p>
-<p>观察者会绑定到 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle" target="_blank" rel="noopener"><code>Lifecycle</code></a> 对象，并在其关联的生命周期遭到销毁后进行自我清理。</p>
-</li>
-<li><p><strong>不会因 Activity 停止而导致崩溃</strong></p>
-<p>如果观察者的生命周期处于非活跃状态（如返回栈中的 Activity），则它不会接收任何 LiveData 事件。</p>
-</li>
-<li><p><strong>不再需要手动处理生命周期</strong></p>
-<p>界面组件只是观察相关数据，不会停止或恢复观察。LiveData 将自动管理所有这些操作，因为它在观察时可以感知相关的生命周期状态变化。</p>
-</li>
-<li><p><strong>数据始终保持最新状态</strong></p>
-<p>如果生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，曾经在后台的 Activity 会在返回前台后立即接收最新的数据。</p>
-</li>
-<li><p><strong>适当的配置更改</strong></p>
-<p>如果由于配置更改（如设备旋转）而重新创建了 Activity 或 Fragment，它会立即接收最新的可用数据。</p>
-</li>
-<li><p><strong>共享资源</strong></p>
-<p>您可以使用单一实例模式扩展 <a href="https://developer.android.com/reference/androidx/lifecycle/LiveData" target="_blank" rel="noopener"><code>LiveData</code></a> 对象以封装系统服务，以便在应用中共享它们。<code>LiveData</code> 对象连接到系统服务一次，然后需要相应资源的任何观察者只需观察 <code>LiveData</code> 对象。有关详情，请参阅<a href="https://developer.android.com/topic/libraries/architecture/livedata#extend_livedata" target="_blank" rel="noopener">扩展 LiveData</a>。</p>
-</li>
-</ul>
+<h4 id="1-什么是小程序"><a href="#1-什么是小程序" class="headerlink" title="1.什么是小程序"></a>1.什么是小程序</h4><blockquote>
+<p>小程序是一种不需要下载安装即可使用的应用，它实现了应用“触手可及”的梦想，用户扫一扫或者搜一下即可打开应用。也体现了“用完即走”的理念，用户不用关心是否安装太多应用的问题。应用将无处不在，随时可用，但又无需安装卸载。<a href="https://baike.baidu.com/item/轻应用/7971483" target="_blank" rel="noopener">轻应用</a>是帮助用户<a href="https://baike.baidu.com/item/低成本/8789226" target="_blank" rel="noopener">低成本</a>构建<a href="https://baike.baidu.com/item/私域流量/23627288" target="_blank" rel="noopener">私域流量</a>利用微信生态引流从而实现变现。</p>
+<p>​                                                                                                                                            —-内容来自百度百科</p>
 </blockquote>
-<h4 id="LiveData实现原理"><a href="#LiveData实现原理" class="headerlink" title="LiveData实现原理"></a>LiveData实现原理</h4><p>简单总结  LifeCycle监听生命周期变化+Version进行数据版本控制</p>
-<p><img src="http://www.plantuml.com/plantuml/png/XLDBZjD04Dtx5BNCeCc2xP09au4WHGeJQMA59IftboUD-cDrbpr4Y9Dm2jP8t0Pn3Tp-vED9nChgUg_glNxLlWkCdakZatIHBkUmL1L9PFpxyzUV7xyJp09x50n2OmWD-hv69-aKlYK0K3cDh3J1Alj2DSr4z4r40jU0W5nPrA0impgTFQQVD_F7zMBr0BSmVjtmrfZJWibZfkaZ5fDL5iXNv2Tl8PG5UKYdrz0NFtaiwjeKJ5y9SKOSRpRrGJaBjwTAhHdY3UgIHkdLJUMKZBN2XPT5gKA1BBRAFhNOGFd05Cu69Sa_E5RvxZBFTS1egN8IEw5fzMp9Nv-vvzKH_uFp5BlEqhudmyKCv9lTd6azv1O9cNEQq8AP2LOLxPDSOk0BQKPEBxtl3rjNQdbFxPXHuw-rDTFFk0jjlLS6-ifavKlF48SFPzrq8ermKripChtRedqYEUhGBkwzxZxhUrTQ-JzbKARGPCZoKUUygiyTCURPlUJJBO9fFl6DNGm3e2WphGH4Y-3iiV_eM5acdwEWmyBIQItOqVkRfasi_Gy8hyRZuJMImVc4SzfvFf_aZgmiZVu7" alt="图片"></p>
-<p>重点看以下几个类</p>
-<p><strong>Observer</strong>调用<strong>observer(LifecycleOwner,Observer)</strong>传入的观察者接口</p>
-<p><strong>ObserverWrapper</strong>对<strong>Observer</strong>进行进一步包装</p>
-<p><strong>LifecycleBoundObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现依赖生命周期 监听数据</p>
-<p><strong>AlwaysActiveObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现不依赖生命周期 监听数据</p>
-<p>以下几个方法</p>
-<p><strong>LiveData.observer(LifecycleOwner,Observer)</strong>  把传入的<strong>LifecycleOwner和Observer</strong> 包装成<strong>LifecycleBoundObserver</strong> 实现依赖生命周期监听数据变化</p>
-<p><strong>LiveData.observeForever(Observer)</strong> 把传入的<strong>Observer</strong>包装成 <strong>AlwaysActiveObserver</strong>实现不依赖生命周期监听数据变化</p>
-<p>赋值/数据下发 执行顺序 </p>
-<p>通过<strong>LiveData.setValue</strong>设置数据</p>
-<p>调用<strong>LiveData.dispatchingValue()</strong> 拿到<strong>Observser</strong>实现类 </p>
-<p>再调用<strong>LiveData.considerNotify()</strong> 通过<strong>mActive</strong>状态和 <strong>version</strong> 判断版本是否下发数据</p>
-<p>新增<strong>Observer</strong>执行顺序</p>
-<p>通过<strong>LiveData.observer(LifecycleOwner,Observer)</strong> 新增一个带lifeCycle 的观察对象 </p>
-<p>通过<strong>LiveData.observeForever(Observer)</strong>新增一个不依赖lifeCycle的观察对象</p>
+<blockquote>
+<p>随着APP市场的饱和，大部分用户已经养成了使用习惯，开发新的APP很难在市场生存。此外，APP开发和推广成本高也是不争的事实。易观2018年3月份的报告显示，移动电商APP的下载成本高达120-200 元，而且这些后期未必能形成转化。互联网金融、二手车电商APP的新客户成本，更是动辄高达数千元。</p>
+<pre><code>----内容来自百度百科</code></pre></blockquote>
+<h4 id="2-小程序的发展史"><a href="#2-小程序的发展史" class="headerlink" title="2.小程序的发展史"></a>2.小程序的发展史</h4><blockquote>
+<p>2016年1月11日，2016<a href="https://baike.baidu.com/item/微信/3905974" target="_blank" rel="noopener">微信</a>公开课PRO版在广州举行，“微信之父”<a href="https://baike.baidu.com/item/张小龙/24795" target="_blank" rel="noopener">张小龙</a>首次公开演讲，宣布<a href="https://baike.baidu.com/item/微信公众号" target="_blank" rel="noopener">微信公众号</a>将推出“应用号”，通过公众号完成一些App的部分功能。</p>
+<p>2016年9月21日晚间，微信官方向部分公众号发出了应用号的内测邀请。</p>
+<p>2016年9月22日凌晨，微信正式对外声明已经开始内测。 [2] </p>
+<p>2016年11月3日晚间，微信团队宣布：微信小程序正式开放公测。 [3] </p>
+<p>2017年1月9日，<a href="https://baike.baidu.com/item/微信小程序/20171697" target="_blank" rel="noopener">微信小程序</a>正式面对C端用户开放，但由于早期小程序数量较少，入口相对较深，因此用户量增长比较缓慢。</p>
+<p>2017年9月20日，支付宝小程序向用户开放公测 [4] </p>
+<p>2017年12月28日，微信小程序开放游戏类目以及在首页增加下拉访问小程序入口，并且将“跳一跳”作为微信升级版的开屏内容进行推广，从而让日活人数在年末迅速增长。</p>
+<p>2018年1月 “跳一跳”等小游戏在大量微信用户中开始传播，而下拉入口的便捷性也让小程序的访问量大增，日活用户大幅增长到 2.8 亿。</p>
+<p>2018年2月份春节期间祝福红包类小程序及小游戏再次点燃用户访问热情，日活人数也达到上半年的高点。</p>
+<p>2018年3月，小米、中兴、华为、金立、联想、魅族、努比亚、OPPO、vivo、一加共十家手机厂商一起推出了快应用，虽然名字不同，本质上也是小程序。 [5] </p>
+<p>2018年7月，百度AI开发者大会上，百度宣布<a href="https://baike.baidu.com/item/百度智能小程序/22603550" target="_blank" rel="noopener">百度智能小程序</a>正式上线。这是继2017年1月微信上线小程序后，又一入局该领域的互联网巨头。BAT三巨头均进军了小程序领域，业内预测，未来两年小程序将取代80%的APP市场。 [5] </p>
+<p>2019年5月22日，腾讯方面表示，QQ小程序正在进行灰度测试，不出意外的话，将于6月正式上线。 </p>
+<p>​                                                                                                                                              —-内容来自百度百科</p>
+</blockquote>
+<h4 id="3-小程序-App-之间有哪些区别"><a href="#3-小程序-App-之间有哪些区别" class="headerlink" title="3.小程序,App 之间有哪些区别"></a>3.小程序,App 之间有哪些区别</h4><p><strong>App:</strong>目前手机系统的两个巨头 Android 和 IOS 。一个app从最初的确定需求到最后的开发上线是一个漫长的过程 如果选择app开发 肯定要开发双系统,但是从开发成本的角度看 这是非常昂贵的(也就几十万吧这只是开发成本,运营成本还没算呢) 但是app功能健全 可以被高度定制 你想要的他都可以有</p>
+<p><strong>小程序:</strong>  一套代码可以同时运行在android 和ios 上 开发成本较低 维护成本低  但是可实现的功能受限 某些特殊功能可能无法实现</p>
+<h4 id="目前实现小程序的实现方式有哪些-两种"><a href="#目前实现小程序的实现方式有哪些-两种" class="headerlink" title="目前实现小程序的实现方式有哪些?(两种)"></a>目前实现小程序的实现方式有哪些?(两种)</h4><p><strong>定制小程序</strong>  从需求确定到设计到开发到最后的上线  都靠自己完成（自己弄设计图,ui,自己开发小程序）</p>
+<p>*<em>模版小程序 *</em> 从第三方那里购买模版  模版可以在线拼接</p>
+<h4 id="两种实现方式-有哪些优缺点"><a href="#两种实现方式-有哪些优缺点" class="headerlink" title="两种实现方式 有哪些优缺点"></a>两种实现方式 有哪些优缺点</h4><p><strong>定制小程序</strong> 界面可以根据自己的需求随意调整 可以完成一些复杂的功能 但是 开发时间相对比较长</p>
+<p><strong>模版小程序</strong> 都是别人设计好的模版 随时拿随时用 快的话 十几分钟就能上线 但是 因为都是设计好的 所以基本上只能实现一些非常简单的展示功能  复杂一点的都实现不了</p>
 
       
       <!-- reward -->
@@ -217,7 +203,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -233,19 +219,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/10/Jetpack-ViewModel%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
+      <a href="/2020/04/17/Jetpack-Paging%E8%A7%A3%E6%9E%90/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            Jetpack-ViewModel详解
+            Jetpack-Paging解析
           
         </div>
       </a>
     
     
-      <a href="/2020/04/06/Jetpack-LifeCycles%E8%A7%A3%E6%9E%90/" class="article-nav-link">
+      <a href="/2020/04/13/Jetpack-Databingding%20%E8%A7%A3%E6%9E%90/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Jetpack-LifeCycles解析</div>
+        <div class="article-nav-title">Jetpack-Databingding 解析</div>
       </a>
     
   </nav>

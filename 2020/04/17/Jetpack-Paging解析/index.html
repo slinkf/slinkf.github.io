@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    ViewModel详解 |  Hexo
+    Jetpack-Paging解析 |  Hexo
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -36,7 +36,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-ViewModel详解" class="article article-type-post" itemscope
+  <article id="post-Jetpack-Paging解析" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  ViewModel详解
+  Jetpack-Paging解析
 </h1>
  
 
@@ -53,8 +53,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/10/ViewModel%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2020-04-10T01:41:25.334Z" itemprop="datePublished">2020-04-10</time>
+      <a href="/2020/04/17/Jetpack-Paging%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2020-04-17T01:40:11.827Z" itemprop="datePublished">2020-04-17</time>
 </a>
       
       
@@ -64,7 +64,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">778字</span>
+            <span class="post-count">160字</span>
         </span>
     </span>
 
@@ -73,7 +73,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -98,30 +98,31 @@
       
 
       
-      <h1 id="Jetpack-ViewModel详解"><a href="#Jetpack-ViewModel详解" class="headerlink" title="Jetpack-ViewModel详解"></a>Jetpack-ViewModel详解</h1><ol>
-<li>ViewModel的作用,为什么要使用ViewModel</li>
-<li>ViewModel实现原理</li>
+      <h2 id="Paging"><a href="#Paging" class="headerlink" title="Paging"></a>Paging</h2><ol>
+<li>Paging是什么?</li>
+<li>为什么要选择paging</li>
+<li>paging的实现原理</li>
 </ol>
-<p><a href="https://developer.android.com/topic/libraries/architecture/viewmodel" target="_blank" rel="noopener">官网</a></p>
-<h4 id="ViewModel的作用"><a href="#ViewModel的作用" class="headerlink" title="ViewModel的作用"></a>ViewModel的作用</h4><blockquote>
-<p>Android 框架可以管理界面控制器（如 Activity 和 Fragment）的生命周期。Android 框架可能会决定销毁或重新创建界面控制器，以响应完全不受您控制的某些用户操作或设备事件。</p>
-<p>如果系统销毁或重新创建界面控制器，则存储在其中的任何临时性界面相关数据都会丢失。例如，应用的某个 Activity 中可能包含用户列表。因配置更改而重新创建 Activity 后，新 Activity 必须重新提取用户列表。对于简单的数据，Activity 可以使用 <code>onSaveInstanceState()</code> 方法从 <code>onCreate()</code> 中的捆绑包恢复其数据，但此方法仅适合可以序列化再反序列化的少量数据，而不适合数量可能较大的数据，如用户列表或位图。</p>
-<p>另一个问题是，界面控制器经常需要进行异步调用，这些调用可能需要一些时间才能返回结果。界面控制器需要管理这些调用，并确保系统在其销毁后清理这些调用以避免潜在的内存泄露。此项管理需要大量的维护工作，并且在因配置更改而重新创建对象的情况下，会造成资源的浪费，因为对象可能需要重新发出已经发出过的调用。</p>
-<p>诸如 Activity 和 Fragment 之类的界面控制器主要用于显示界面数据、对用户操作做出响应或处理操作系统通信（如权限请求）。如果要求界面控制器也负责从数据库或网络加载数据，那么会使类越发膨胀。为界面控制器分配过多的责任可能会导致单个类尝试自己处理应用的所有工作，而不是将工作委托给其他类。以这种方式为界面控制器分配过多的责任也会大大增加测试的难度。</p>
-<p>从界面控制器逻辑中分离出视图数据所有权的做法更易行且更高效。</p>
-</blockquote>
-<h4 id="ViewModel实现原理"><a href="#ViewModel实现原理" class="headerlink" title="ViewModel实现原理"></a>ViewModel实现原理</h4><p>简单概括 通过ViewModelStore保存ViewModel对象  横竖屏切换时持久化ViewModelStore 实现ViewModel的持久化</p>
-<p><img src="http://www.plantuml.com/plantuml/png/ZP5VIiD04CRVvnJpc4fx0HDAH2mAjWWDlY_9D2xidx8xYPQGatWAdmLl8rx3LjOc9QtsBVFbDpFVjvDw5euhhI2xo-vlBXybFSzjGUhhxVtpzGDo9Rp7lVhWR2qBShw1WOPs5SsSA3KP7ltz-ofdMKlU_8EDPo9dwpPdJkjmQ06bON8haHC66Hj0n2H3Uc4oHI_L53FC7Gccw7gNDyccenZQK-4R-9semqVS6LnkQq9zMCTmQcr97AKBQnQLKhXVVXw-P2TDESOZ_IqScWy-6hWL_cakradexK_NMnrgAmjSLnmDWDuHTZO2yBDgU1v_CPaCn27MKS7WKIGyCgHaYaghRm00" alt="类图"></p>
-<p><img src="http://www.plantuml.com/plantuml/png/ZP0nIiP048NxESMMYZSmJIHO1A813VRhPX96TcV2xiGWOcjjR-K516l1sqYkuJOf8Wf_-ys3xyqhazgeS_3GrLrpVdhcbEv97zRtj_Nb-OPmkP0U_RLAnFNZy_lr2uWLus0TclsvNHZZ8_oYPaJTawFZ0fu033XlKpALX4aOMJUreJ1v39calmtjxHqwDS9Ng9RuKhWI7cYSerKIhZd_n2vxp1RD7HgRzFza0IU7rIwH-xpM3m00" alt="类图"></p>
-<p><img src="http://www.plantuml.com/plantuml/png/SoWkIImgAStDuGhn3F5njKehIapFJSqhURvkuVC9RM6PgUM--IcfES79-GMfppVkVZfx7nTNPbv9Qb5QOdAg0aA-9ByerRyyBxMecWjDL24zjGHLH4FJcgkMYoiv9x6uMC4DQg62GcPkGKugY5cCtLoOIj_4lCJqr29Fe7A5N3H1Qovjqcp7D1F38hXsXLo__3pd_Boqp7GkWhR03D44MOR3EhYMQYwFnE8CtyG2c-2IeioyT1sSAkqKSfqpCdDIu2ufnj2AwX2W1bI1ObBT3kDfwUfY2IviqOAf4cu15vT3QbuACBq10000" alt="类图"></p>
-<h5 id="重点看以下几个类"><a href="#重点看以下几个类" class="headerlink" title="重点看以下几个类"></a>重点看以下几个类</h5><p><strong>Factory</strong>负责创建ViewModel 有一个默认的实现类 用来创建无参的ViewModel</p>
-<p><strong>ViewModelProviders</strong>负责拿到<strong>ViewModelScope</strong>和创建默认的<strong>Factory</strong> 然后返回<strong>ViewModelProvider</strong></p>
-<p><strong>ViewModelStore</strong> 负责管理ViewModel的 Actiivty和Fragment持久化的也就是他 内部通过map进行存储</p>
-<p><strong>ComponentActivity</strong> activity 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>Fragment</strong> fragment 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>FragmentManagerImpl</strong> fragmentManager实体类持有<strong>FragmentManagerViewModel</strong>实例</p>
-<p><strong>FragmentManagerViewModel</strong> 管理Fragment用到的ViewModel 以及子Fragment的<strong>FragmentManagerViewModel</strong> 最终存放在Activity的ViewModelScope中</p>
-<h5 id="重点看以下几个方法"><a href="#重点看以下几个方法" class="headerlink" title="重点看以下几个方法"></a>重点看以下几个方法</h5><p><strong>ComponentActivity.onRetainNonConfigurationInstance()</strong> 当屏幕发生旋转时调用 返回一个持久化对象 这里返回的就是一个存有ViewModelScope的类</p>
+<p>为什么要选择paging</p>
+<p>代码高度解耦 逻辑清晰</p>
+<p>分页功能强大（可以支持分段加载 跳跃式的加载 这个后面再看）</p>
+<p>单页请求失败可重试</p>
+<p>数据失效可重新创建数据 </p>
+<p>google jetpack开发神器之一 可以和Livedata和room打组合拳</p>
+<p>支持kt inline函数 代码量少</p>
+<p>缺点：机制过于复杂 </p>
+<p>出错不好排查,现有的资料太少 </p>
+<p>如果不懂 LiveData和lifecycle根本没法用</p>
+<p>paging中几个重要的成员:</p>
+<p>PagedList</p>
+<p>ComputableLivedata</p>
+<p>PagedListAdapter</p>
+<p>DataSource</p>
+<p>DataSource.Factory</p>
+<p>AsyncPagedListDiffer</p>
+<p>AtomicBoolean</p>
+<p>Excuter</p>
+<p>loading中….</p>
 
       
       <!-- reward -->
@@ -187,7 +188,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/10/ViewModel%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2020/04/17/Jetpack-Paging%E8%A7%A3%E6%9E%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -204,9 +205,9 @@
   <nav class="article-nav">
     
     
-      <a href="/2020/04/07/Jetpack-LiveData%E8%AF%A6%E8%A7%A3/" class="article-nav-link">
+      <a href="/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Jetpack-LiveData详解</div>
+        <div class="article-nav-title">小程序</div>
       </a>
     
   </nav>

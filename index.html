@@ -70,7 +70,7 @@
     
     
     
-    <article id="post-ViewModel详解" class="article article-type-post" itemscope
+    <article id="post-Jetpack-Paging解析" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -78,8 +78,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2020/04/10/ViewModel%E8%AF%A6%E8%A7%A3/"
-    >ViewModel详解</a> 
+  <a class="article-title" href="/2020/04/17/Jetpack-Paging%E8%A7%A3%E6%9E%90/"
+    >Jetpack-Paging解析</a> 
 </h2>
  
 
@@ -88,7 +88,261 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/10/ViewModel%E8%AF%A6%E8%A7%A3/" class="article-date">
+      <a href="/2020/04/17/Jetpack-Paging%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2020-04-17T01:40:11.827Z" itemprop="datePublished">2020-04-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h2 id="Paging"><a href="#Paging" class="headerlink" title="Paging"></a>Paging</h2><ol>
+<li>Paging是什么?</li>
+<li>为什么要选择paging</li>
+<li>paging的实现原理</li>
+</ol>
+<p>为什么要选择paging</p>
+<p>代码高度解耦 逻辑清晰</p>
+<p>分页功能强大（可以支持分段加载 跳跃式的加载 这个后面再看）</p>
+<p>单页请求失败可重试</p>
+<p>数据失效可重新创建数据 </p>
+<p>google jetpack开发神器之一 可以和Livedata和room打组合拳</p>
+<p>支持kt inline函数 代码量少</p>
+<p>缺点：机制过于复杂 </p>
+<p>出错不好排查,现有的资料太少 </p>
+<p>如果不懂 LiveData和lifecycle根本没法用</p>
+<p>paging中几个重要的成员:</p>
+<p>PagedList</p>
+<p>ComputableLivedata</p>
+<p>PagedListAdapter</p>
+<p>DataSource</p>
+<p>DataSource.Factory</p>
+<p>AsyncPagedListDiffer</p>
+<p>AtomicBoolean</p>
+<p>Excuter</p>
+<p>loading中….</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-小程序" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"
+    >小程序</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/17/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="article-date">
+  <time datetime="2020-04-17T01:39:37.767Z" itemprop="datePublished">2020-04-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h2 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h2><h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ol>
+<li><p>什么是小程序?</p>
+</li>
+<li><p>小程序的发展历史</p>
+</li>
+<li><p>小程序,App 之间有哪些区别</p>
+</li>
+<li><p>目前实现小程序的实现方式有哪些?(两种)</p>
+</li>
+<li><p>两种实现方式 有哪些优缺点</p>
+</li>
+</ol>
+<h4 id="1-什么是小程序"><a href="#1-什么是小程序" class="headerlink" title="1.什么是小程序"></a>1.什么是小程序</h4><blockquote>
+<p>小程序是一种不需要下载安装即可使用的应用，它实现了应用“触手可及”的梦想，用户扫一扫或者搜一下即可打开应用。也体现了“用完即走”的理念，用户不用关心是否安装太多应用的问题。应用将无处不在，随时可用，但又无需安装卸载。<a href="https://baike.baidu.com/item/轻应用/7971483" target="_blank" rel="noopener">轻应用</a>是帮助用户<a href="https://baike.baidu.com/item/低成本/8789226" target="_blank" rel="noopener">低成本</a>构建<a href="https://baike.baidu.com/item/私域流量/23627288" target="_blank" rel="noopener">私域流量</a>利用微信生态引流从而实现变现。</p>
+<p>​                                                                                                                                            —-内容来自百度百科</p>
+</blockquote>
+<blockquote>
+<p>随着APP市场的饱和，大部分用户已经养成了使用习惯，开发新的APP很难在市场生存。此外，APP开发和推广成本高也是不争的事实。易观2018年3月份的报告显示，移动电商APP的下载成本高达120-200 元，而且这些后期未必能形成转化。互联网金融、二手车电商APP的新客户成本，更是动辄高达数千元。</p>
+<pre><code>----内容来自百度百科</code></pre></blockquote>
+<h4 id="2-小程序的发展史"><a href="#2-小程序的发展史" class="headerlink" title="2.小程序的发展史"></a>2.小程序的发展史</h4><blockquote>
+<p>2016年1月11日，2016<a href="https://baike.baidu.com/item/微信/3905974" target="_blank" rel="noopener">微信</a>公开课PRO版在广州举行，“微信之父”<a href="https://baike.baidu.com/item/张小龙/24795" target="_blank" rel="noopener">张小龙</a>首次公开演讲，宣布<a href="https://baike.baidu.com/item/微信公众号" target="_blank" rel="noopener">微信公众号</a>将推出“应用号”，通过公众号完成一些App的部分功能。</p>
+<p>2016年9月21日晚间，微信官方向部分公众号发出了应用号的内测邀请。</p>
+<p>2016年9月22日凌晨，微信正式对外声明已经开始内测。 [2] </p>
+<p>2016年11月3日晚间，微信团队宣布：微信小程序正式开放公测。 [3] </p>
+<p>2017年1月9日，<a href="https://baike.baidu.com/item/微信小程序/20171697" target="_blank" rel="noopener">微信小程序</a>正式面对C端用户开放，但由于早期小程序数量较少，入口相对较深，因此用户量增长比较缓慢。</p>
+<p>2017年9月20日，支付宝小程序向用户开放公测 [4] </p>
+<p>2017年12月28日，微信小程序开放游戏类目以及在首页增加下拉访问小程序入口，并且将“跳一跳”作为微信升级版的开屏内容进行推广，从而让日活人数在年末迅速增长。</p>
+<p>2018年1月 “跳一跳”等小游戏在大量微信用户中开始传播，而下拉入口的便捷性也让小程序的访问量大增，日活用户大幅增长到 2.8 亿。</p>
+<p>2018年2月份春节期间祝福红包类小程序及小游戏再次点燃用户访问热情，日活人数也达到上半年的高点。</p>
+<p>2018年3月，小米、中兴、华为、金立、联想、魅族、努比亚、OPPO、vivo、一加共十家手机厂商一起推出了快应用，虽然名字不同，本质上也是小程序。 [5] </p>
+<p>2018年7月，百度AI开发者大会上，百度宣布<a href="https://baike.baidu.com/item/百度智能小程序/22603550" target="_blank" rel="noopener">百度智能小程序</a>正式上线。这是继2017年1月微信上线小程序后，又一入局该领域的互联网巨头。BAT三巨头均进军了小程序领域，业内预测，未来两年小程序将取代80%的APP市场。 [5] </p>
+<p>2019年5月22日，腾讯方面表示，QQ小程序正在进行灰度测试，不出意外的话，将于6月正式上线。 </p>
+<p>​                                                                                                                                              —-内容来自百度百科</p>
+</blockquote>
+<h4 id="3-小程序-App-之间有哪些区别"><a href="#3-小程序-App-之间有哪些区别" class="headerlink" title="3.小程序,App 之间有哪些区别"></a>3.小程序,App 之间有哪些区别</h4><p><strong>App:</strong>目前手机系统的两个巨头 Android 和 IOS 。一个app从最初的确定需求到最后的开发上线是一个漫长的过程 如果选择app开发 肯定要开发双系统,但是从开发成本的角度看 这是非常昂贵的(也就几十万吧这只是开发成本,运营成本还没算呢) 但是app功能健全 可以被高度定制 你想要的他都可以有</p>
+<p><strong>小程序:</strong>  一套代码可以同时运行在android 和ios 上 开发成本较低 维护成本低  但是可实现的功能受限 某些特殊功能可能无法实现</p>
+<h4 id="目前实现小程序的实现方式有哪些-两种"><a href="#目前实现小程序的实现方式有哪些-两种" class="headerlink" title="目前实现小程序的实现方式有哪些?(两种)"></a>目前实现小程序的实现方式有哪些?(两种)</h4><p><strong>定制小程序</strong>  从需求确定到设计到开发到最后的上线  都靠自己完成（自己弄设计图,ui,自己开发小程序）</p>
+<p>*<em>模版小程序 *</em> 从第三方那里购买模版  模版可以在线拼接</p>
+<h4 id="两种实现方式-有哪些优缺点"><a href="#两种实现方式-有哪些优缺点" class="headerlink" title="两种实现方式 有哪些优缺点"></a>两种实现方式 有哪些优缺点</h4><p><strong>定制小程序</strong> 界面可以根据自己的需求随意调整 可以完成一些复杂的功能 但是 开发时间相对比较长</p>
+<p><strong>模版小程序</strong> 都是别人设计好的模版 随时拿随时用 快的话 十几分钟就能上线 但是 因为都是设计好的 所以基本上只能实现一些非常简单的展示功能  复杂一点的都实现不了</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Jetpack-Databingding 解析" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/13/Jetpack-Databingding%20%E8%A7%A3%E6%9E%90/"
+    >Jetpack-Databingding 解析</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/13/Jetpack-Databingding%20%E8%A7%A3%E6%9E%90/" class="article-date">
+  <time datetime="2020-04-13T09:13:52.980Z" itemprop="datePublished">2020-04-13</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h2 id="Jetpack-Databingding-解析"><a href="#Jetpack-Databingding-解析" class="headerlink" title="Jetpack-Databingding 解析"></a>Jetpack-Databingding 解析</h2>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Jetpack-ViewModel详解" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/10/Jetpack-ViewModel%E8%AF%A6%E8%A7%A3/"
+    >Jetpack-ViewModel详解</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/10/Jetpack-ViewModel%E8%AF%A6%E8%A7%A3/" class="article-date">
   <time datetime="2020-04-10T01:41:25.334Z" itemprop="datePublished">2020-04-10</time>
 </a>
       
@@ -274,7 +528,7 @@
 
 </article>
     
-    <article id="post-LifeCycles解析" class="article article-type-post" itemscope
+    <article id="post-Jetpack-LifeCycles解析" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -282,8 +536,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/"
-    >LifeCycles解析</a> 
+  <a class="article-title" href="/2020/04/06/Jetpack-LifeCycles%E8%A7%A3%E6%9E%90/"
+    >Jetpack-LifeCycles解析</a> 
 </h2>
  
 
@@ -292,7 +546,7 @@
 
     
     <div class="article-meta">
-      <a href="/2020/04/06/LifeCycles%E8%A7%A3%E6%9E%90/" class="article-date">
+      <a href="/2020/04/06/Jetpack-LifeCycles%E8%A7%A3%E6%9E%90/" class="article-date">
   <time datetime="2020-04-06T15:53:31.280Z" itemprop="datePublished">2020-04-06</time>
 </a>
       
