@@ -109,21 +109,26 @@
 <p><a href="https://developer.android.com/reference/androidx/lifecycle/package-summary" target="_blank" rel="noopener"><code>androidx.lifecycle</code></a> 软件包提供了可用于构建生命周期感知型组件的类和接口 - 这些组件可以根据 Activity 或 Fragment 的当前生命周期状态自动调整其行为</p>
 <h3 id="LifeCycles实现原理"><a href="#LifeCycles实现原理" class="headerlink" title="LifeCycles实现原理"></a>LifeCycles实现原理</h3><p>简单概括 Fragment监听生命周期 + 反射 + 注解</p>
 <p><img src="http://www.plantuml.com/plantuml/png/lLHTRjim37xNAVIOR6qF40H3ZSm50hHrORiO-ZGeCfrei2L3PZmKNK-oK-nvm6upx1fJw4ffeXRONleYY-H7VloXTTwZiBXj6rOkoykKNweQ5lUoWJy_Vlx-_einfH5iBIIGIUvCsLSDze5npjU0GJkPpiATFJB6P2FwVk-LmrhrQE_9aRVPgWSxWBqItUn2z5Y86fQEIgmQSBfvyFF04-vldnHk2XG87oYKg2flcOJqlMOw6uog26UXDGFy0vJgMcoj1Ot4uqgZBzasGbSDXFJImQ4cT4vtPOkLAr98v4VbFvMztBLJYwQGfeCSwbc2fbNItS3HIPXdgoyWySqhU_Jpog4p5Y-iMBSEnCUqAzLt0kNcMPsWjoqdSOHarvyNUPgKwOaNYpB9oo3bQN5xjJVU9BV5SsXs4uIFQL7csLsGa-kxVNeBqtP6EzP4eXeKFgrJPzKW47YjN6zv6otTBDAGs_l_M62broDNSp3wqFLnS6ECs1mgYBVuWLDOMWzI-6NpokXNU8KZU4GKaoW4D-6t8WHNMg4I3GbJ7oaCVjpomnU06tSwVx9ns9tZeb7pZh3pRsTdyV1OfE7lJa_ZD-DbtD6kxYaTsujHehvuDZzW5laG8l9ZXyol97qEkd8lwry0" alt="类图奉上"></p>
-<p>这里主要需要看到的地方有 </p>
-<p><strong>ComponetActivity</strong></p>
-<p><strong>LifeCycleRegistry</strong></p>
-<p><strong>ReportFragment</strong></p>
-<p>就是这三个角色玩活了Android的生命周期</p>
-<p><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</p>
-<p><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</p>
-<p><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</p>
-<p><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></p>
-<p><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</p>
+<p>就是这三个角色玩活了Android的生命周期 这里主要需要看到的地方有 </p>
+<ul>
+<li><strong>ComponetActivity</strong></li>
+<li><strong>LifeCycleRegistry</strong></li>
+<li><strong>ReportFragment</strong></li>
+</ul>
+<ol>
+<li><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</li>
+<li><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</li>
+<li><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</li>
+<li><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></li>
+<li><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</li>
+</ol>
 <p>当发生一次生命周期的变化时 由以下顺序调用</p>
-<p><strong>ReportFragment</strong> –&gt;dispatch()   </p>
-<p><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</p>
-<p><strong>ObserverWithState</strong> –&gt;dispatchEvent()</p>
-<p><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</p>
+<ol>
+<li><strong>ReportFragment</strong> –&gt;dispatch()   </li>
+<li><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</li>
+<li><strong>ObserverWithState</strong> –&gt;dispatchEvent()</li>
+<li><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</li>
+</ol>
 <h3 id="为什么第三方框架Glide不用LifeCycle管理生命周期"><a href="#为什么第三方框架Glide不用LifeCycle管理生命周期" class="headerlink" title="为什么第三方框架Glide不用LifeCycle管理生命周期"></a>为什么第三方框架Glide不用LifeCycle管理生命周期</h3><p>原因很简单 看过<strong>ReportFragment</strong>就知道了 利用fragment管理生命周期相当方便 Glide 当然会选择直接自己创建fragment的方式去管理生命周期了</p>
 
       

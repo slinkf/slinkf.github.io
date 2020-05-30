@@ -114,13 +114,15 @@
 <p><img src="http://www.plantuml.com/plantuml/png/ZP5VIiD04CRVvnJpc4fx0HDAH2mAjWWDlY_9D2xidx8xYPQGatWAdmLl8rx3LjOc9QtsBVFbDpFVjvDw5euhhI2xo-vlBXybFSzjGUhhxVtpzGDo9Rp7lVhWR2qBShw1WOPs5SsSA3KP7ltz-ofdMKlU_8EDPo9dwpPdJkjmQ06bON8haHC66Hj0n2H3Uc4oHI_L53FC7Gccw7gNDyccenZQK-4R-9semqVS6LnkQq9zMCTmQcr97AKBQnQLKhXVVXw-P2TDESOZ_IqScWy-6hWL_cakradexK_NMnrgAmjSLnmDWDuHTZO2yBDgU1v_CPaCn27MKS7WKIGyCgHaYaghRm00" alt="类图"></p>
 <p><img src="http://www.plantuml.com/plantuml/png/ZP0nIiP048NxESMMYZSmJIHO1A813VRhPX96TcV2xiGWOcjjR-K516l1sqYkuJOf8Wf_-ys3xyqhazgeS_3GrLrpVdhcbEv97zRtj_Nb-OPmkP0U_RLAnFNZy_lr2uWLus0TclsvNHZZ8_oYPaJTawFZ0fu033XlKpALX4aOMJUreJ1v39calmtjxHqwDS9Ng9RuKhWI7cYSerKIhZd_n2vxp1RD7HgRzFza0IU7rIwH-xpM3m00" alt="类图"></p>
 <p><img src="http://www.plantuml.com/plantuml/png/SoWkIImgAStDuGhn3F5njKehIapFJSqhURvkuVC9RM6PgUM--IcfES79-GMfppVkVZfx7nTNPbv9Qb5QOdAg0aA-9ByerRyyBxMecWjDL24zjGHLH4FJcgkMYoiv9x6uMC4DQg62GcPkGKugY5cCtLoOIj_4lCJqr29Fe7A5N3H1Qovjqcp7D1F38hXsXLo__3pd_Boqp7GkWhR03D44MOR3EhYMQYwFnE8CtyG2c-2IeioyT1sSAkqKSfqpCdDIu2ufnj2AwX2W1bI1ObBT3kDfwUfY2IviqOAf4cu15vT3QbuACBq10000" alt="类图"></p>
-<h5 id="重点看以下几个类"><a href="#重点看以下几个类" class="headerlink" title="重点看以下几个类"></a>重点看以下几个类</h5><p><strong>Factory</strong>负责创建ViewModel 有一个默认的实现类 用来创建无参的ViewModel</p>
-<p><strong>ViewModelProviders</strong>负责拿到<strong>ViewModelScope</strong>和创建默认的<strong>Factory</strong> 然后返回<strong>ViewModelProvider</strong></p>
-<p><strong>ViewModelStore</strong> 负责管理ViewModel的 Actiivty和Fragment持久化的也就是他 内部通过map进行存储</p>
-<p><strong>ComponentActivity</strong> activity 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>Fragment</strong> fragment 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>FragmentManagerImpl</strong> fragmentManager实体类持有<strong>FragmentManagerViewModel</strong>实例</p>
-<p><strong>FragmentManagerViewModel</strong> 管理Fragment用到的ViewModel 以及子Fragment的<strong>FragmentManagerViewModel</strong> 最终存放在Activity的ViewModelScope中</p>
+<h5 id="重点看以下几个类"><a href="#重点看以下几个类" class="headerlink" title="重点看以下几个类"></a>重点看以下几个类</h5><ol>
+<li><strong>Factory</strong>负责创建ViewModel 有一个默认的实现类 用来创建无参的ViewModel</li>
+<li><strong>ViewModelProviders</strong>负责拿到<strong>ViewModelScope</strong>和创建默认的<strong>Factory</strong> 然后返回<strong>ViewModelProvider</strong></li>
+<li><em>ViewModelStore*</em> 负责管理ViewModel的 Actiivty和Fragment持久化的也就是他 内部通过map进行存储</li>
+<li><strong>ComponentActivity</strong> activity 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</li>
+<li><strong>Fragment</strong> fragment 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</li>
+<li><strong>FragmentManagerImpl</strong> fragmentManager实体类持有<strong>FragmentManagerViewModel</strong>实例</li>
+<li><strong>FragmentManagerViewModel</strong> 管理Fragment用到的ViewModel 以及子Fragment的<strong>FragmentManagerViewModel</strong> 最终存放在Activity的ViewModelScope中</li>
+</ol>
 <h5 id="重点看以下几个方法"><a href="#重点看以下几个方法" class="headerlink" title="重点看以下几个方法"></a>重点看以下几个方法</h5><p><strong>ComponentActivity.onRetainNonConfigurationInstance()</strong> 当屏幕发生旋转时调用 返回一个持久化对象 这里返回的就是一个存有ViewModelScope的类</p>
 
       

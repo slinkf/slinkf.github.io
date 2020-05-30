@@ -426,13 +426,15 @@
 <p><img src="http://www.plantuml.com/plantuml/png/ZP5VIiD04CRVvnJpc4fx0HDAH2mAjWWDlY_9D2xidx8xYPQGatWAdmLl8rx3LjOc9QtsBVFbDpFVjvDw5euhhI2xo-vlBXybFSzjGUhhxVtpzGDo9Rp7lVhWR2qBShw1WOPs5SsSA3KP7ltz-ofdMKlU_8EDPo9dwpPdJkjmQ06bON8haHC66Hj0n2H3Uc4oHI_L53FC7Gccw7gNDyccenZQK-4R-9semqVS6LnkQq9zMCTmQcr97AKBQnQLKhXVVXw-P2TDESOZ_IqScWy-6hWL_cakradexK_NMnrgAmjSLnmDWDuHTZO2yBDgU1v_CPaCn27MKS7WKIGyCgHaYaghRm00" alt="类图"></p>
 <p><img src="http://www.plantuml.com/plantuml/png/ZP0nIiP048NxESMMYZSmJIHO1A813VRhPX96TcV2xiGWOcjjR-K516l1sqYkuJOf8Wf_-ys3xyqhazgeS_3GrLrpVdhcbEv97zRtj_Nb-OPmkP0U_RLAnFNZy_lr2uWLus0TclsvNHZZ8_oYPaJTawFZ0fu033XlKpALX4aOMJUreJ1v39calmtjxHqwDS9Ng9RuKhWI7cYSerKIhZd_n2vxp1RD7HgRzFza0IU7rIwH-xpM3m00" alt="类图"></p>
 <p><img src="http://www.plantuml.com/plantuml/png/SoWkIImgAStDuGhn3F5njKehIapFJSqhURvkuVC9RM6PgUM--IcfES79-GMfppVkVZfx7nTNPbv9Qb5QOdAg0aA-9ByerRyyBxMecWjDL24zjGHLH4FJcgkMYoiv9x6uMC4DQg62GcPkGKugY5cCtLoOIj_4lCJqr29Fe7A5N3H1Qovjqcp7D1F38hXsXLo__3pd_Boqp7GkWhR03D44MOR3EhYMQYwFnE8CtyG2c-2IeioyT1sSAkqKSfqpCdDIu2ufnj2AwX2W1bI1ObBT3kDfwUfY2IviqOAf4cu15vT3QbuACBq10000" alt="类图"></p>
-<h5 id="重点看以下几个类"><a href="#重点看以下几个类" class="headerlink" title="重点看以下几个类"></a>重点看以下几个类</h5><p><strong>Factory</strong>负责创建ViewModel 有一个默认的实现类 用来创建无参的ViewModel</p>
-<p><strong>ViewModelProviders</strong>负责拿到<strong>ViewModelScope</strong>和创建默认的<strong>Factory</strong> 然后返回<strong>ViewModelProvider</strong></p>
-<p><strong>ViewModelStore</strong> 负责管理ViewModel的 Actiivty和Fragment持久化的也就是他 内部通过map进行存储</p>
-<p><strong>ComponentActivity</strong> activity 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>Fragment</strong> fragment 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</p>
-<p><strong>FragmentManagerImpl</strong> fragmentManager实体类持有<strong>FragmentManagerViewModel</strong>实例</p>
-<p><strong>FragmentManagerViewModel</strong> 管理Fragment用到的ViewModel 以及子Fragment的<strong>FragmentManagerViewModel</strong> 最终存放在Activity的ViewModelScope中</p>
+<h5 id="重点看以下几个类"><a href="#重点看以下几个类" class="headerlink" title="重点看以下几个类"></a>重点看以下几个类</h5><ol>
+<li><strong>Factory</strong>负责创建ViewModel 有一个默认的实现类 用来创建无参的ViewModel</li>
+<li><strong>ViewModelProviders</strong>负责拿到<strong>ViewModelScope</strong>和创建默认的<strong>Factory</strong> 然后返回<strong>ViewModelProvider</strong></li>
+<li><em>ViewModelStore*</em> 负责管理ViewModel的 Actiivty和Fragment持久化的也就是他 内部通过map进行存储</li>
+<li><strong>ComponentActivity</strong> activity 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</li>
+<li><strong>Fragment</strong> fragment 基类实现了 ViewModelStoreOwner接口,扩展了getViewModelScope方法 返回ViewModelScope实例</li>
+<li><strong>FragmentManagerImpl</strong> fragmentManager实体类持有<strong>FragmentManagerViewModel</strong>实例</li>
+<li><strong>FragmentManagerViewModel</strong> 管理Fragment用到的ViewModel 以及子Fragment的<strong>FragmentManagerViewModel</strong> 最终存放在Activity的ViewModelScope中</li>
+</ol>
 <h5 id="重点看以下几个方法"><a href="#重点看以下几个方法" class="headerlink" title="重点看以下几个方法"></a>重点看以下几个方法</h5><p><strong>ComponentActivity.onRetainNonConfigurationInstance()</strong> 当屏幕发生旋转时调用 返回一个持久化对象 这里返回的就是一个存有ViewModelScope的类</p>
 
       
@@ -537,20 +539,28 @@
 <h4 id="LiveData实现原理"><a href="#LiveData实现原理" class="headerlink" title="LiveData实现原理"></a>LiveData实现原理</h4><p>简单总结  LifeCycle监听生命周期变化+Version进行数据版本控制</p>
 <p><img src="http://www.plantuml.com/plantuml/png/XLDBZjD04Dtx5BNCeCc2xP09au4WHGeJQMA59IftboUD-cDrbpr4Y9Dm2jP8t0Pn3Tp-vED9nChgUg_glNxLlWkCdakZatIHBkUmL1L9PFpxyzUV7xyJp09x50n2OmWD-hv69-aKlYK0K3cDh3J1Alj2DSr4z4r40jU0W5nPrA0impgTFQQVD_F7zMBr0BSmVjtmrfZJWibZfkaZ5fDL5iXNv2Tl8PG5UKYdrz0NFtaiwjeKJ5y9SKOSRpRrGJaBjwTAhHdY3UgIHkdLJUMKZBN2XPT5gKA1BBRAFhNOGFd05Cu69Sa_E5RvxZBFTS1egN8IEw5fzMp9Nv-vvzKH_uFp5BlEqhudmyKCv9lTd6azv1O9cNEQq8AP2LOLxPDSOk0BQKPEBxtl3rjNQdbFxPXHuw-rDTFFk0jjlLS6-ifavKlF48SFPzrq8ermKripChtRedqYEUhGBkwzxZxhUrTQ-JzbKARGPCZoKUUygiyTCURPlUJJBO9fFl6DNGm3e2WphGH4Y-3iiV_eM5acdwEWmyBIQItOqVkRfasi_Gy8hyRZuJMImVc4SzfvFf_aZgmiZVu7" alt="图片"></p>
 <p>重点看以下几个类</p>
-<p><strong>Observer</strong>调用<strong>observer(LifecycleOwner,Observer)</strong>传入的观察者接口</p>
-<p><strong>ObserverWrapper</strong>对<strong>Observer</strong>进行进一步包装</p>
-<p><strong>LifecycleBoundObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现依赖生命周期 监听数据</p>
-<p><strong>AlwaysActiveObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现不依赖生命周期 监听数据</p>
+<ol>
+<li><strong>Observer</strong>调用<strong>observer(LifecycleOwner,Observer)</strong>传入的观察者接口</li>
+<li><strong>ObserverWrapper</strong>对<strong>Observer</strong>进行进一步包装</li>
+<li><strong>LifecycleBoundObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现依赖生命周期 监听数据</li>
+<li><strong>AlwaysActiveObserver</strong>对<strong>ObserverWrapper</strong>进一步包装 实现不依赖生命周期 监听数据</li>
+</ol>
 <p>以下几个方法</p>
-<p><strong>LiveData.observer(LifecycleOwner,Observer)</strong>  把传入的<strong>LifecycleOwner和Observer</strong> 包装成<strong>LifecycleBoundObserver</strong> 实现依赖生命周期监听数据变化</p>
-<p><strong>LiveData.observeForever(Observer)</strong> 把传入的<strong>Observer</strong>包装成 <strong>AlwaysActiveObserver</strong>实现不依赖生命周期监听数据变化</p>
+<ol>
+<li><strong>LiveData.observer(LifecycleOwner,Observer)</strong>  把传入的<strong>LifecycleOwner和Observer</strong> 包装成<strong>LifecycleBoundObserver</strong> 实现依赖生命周期监听数据变化</li>
+<li><strong>LiveData.observeForever(Observer)</strong> 把传入的<strong>Observer</strong>包装成 <strong>AlwaysActiveObserver</strong>实现不依赖生命周期监听数据变化</li>
+</ol>
 <p>赋值/数据下发 执行顺序 </p>
-<p>通过<strong>LiveData.setValue</strong>设置数据</p>
-<p>调用<strong>LiveData.dispatchingValue()</strong> 拿到<strong>Observser</strong>实现类 </p>
-<p>再调用<strong>LiveData.considerNotify()</strong> 通过<strong>mActive</strong>状态和 <strong>version</strong> 判断版本是否下发数据</p>
+<ol>
+<li>通过<strong>LiveData.setValue</strong>设置数据</li>
+<li>调用<strong>LiveData.dispatchingValue()</strong> 拿到<strong>Observser</strong>实现类 </li>
+<li>再调用<strong>LiveData.considerNotify()</strong> 通过<strong>mActive</strong>状态和 <strong>version</strong> 判断版本是否下发数据</li>
+</ol>
 <p>新增<strong>Observer</strong>执行顺序</p>
-<p>通过<strong>LiveData.observer(LifecycleOwner,Observer)</strong> 新增一个带lifeCycle 的观察对象 </p>
-<p>通过<strong>LiveData.observeForever(Observer)</strong>新增一个不依赖lifeCycle的观察对象</p>
+<ol>
+<li>通过<strong>LiveData.observer(LifecycleOwner,Observer)</strong> 新增一个带lifeCycle 的观察对象 </li>
+<li>或通过<strong>LiveData.observeForever(Observer)</strong>新增一个不依赖lifeCycle的观察对象</li>
+</ol>
 
       
       <!-- reward -->
@@ -625,21 +635,26 @@
 <p><a href="https://developer.android.com/reference/androidx/lifecycle/package-summary" target="_blank" rel="noopener"><code>androidx.lifecycle</code></a> 软件包提供了可用于构建生命周期感知型组件的类和接口 - 这些组件可以根据 Activity 或 Fragment 的当前生命周期状态自动调整其行为</p>
 <h3 id="LifeCycles实现原理"><a href="#LifeCycles实现原理" class="headerlink" title="LifeCycles实现原理"></a>LifeCycles实现原理</h3><p>简单概括 Fragment监听生命周期 + 反射 + 注解</p>
 <p><img src="http://www.plantuml.com/plantuml/png/lLHTRjim37xNAVIOR6qF40H3ZSm50hHrORiO-ZGeCfrei2L3PZmKNK-oK-nvm6upx1fJw4ffeXRONleYY-H7VloXTTwZiBXj6rOkoykKNweQ5lUoWJy_Vlx-_einfH5iBIIGIUvCsLSDze5npjU0GJkPpiATFJB6P2FwVk-LmrhrQE_9aRVPgWSxWBqItUn2z5Y86fQEIgmQSBfvyFF04-vldnHk2XG87oYKg2flcOJqlMOw6uog26UXDGFy0vJgMcoj1Ot4uqgZBzasGbSDXFJImQ4cT4vtPOkLAr98v4VbFvMztBLJYwQGfeCSwbc2fbNItS3HIPXdgoyWySqhU_Jpog4p5Y-iMBSEnCUqAzLt0kNcMPsWjoqdSOHarvyNUPgKwOaNYpB9oo3bQN5xjJVU9BV5SsXs4uIFQL7csLsGa-kxVNeBqtP6EzP4eXeKFgrJPzKW47YjN6zv6otTBDAGs_l_M62broDNSp3wqFLnS6ECs1mgYBVuWLDOMWzI-6NpokXNU8KZU4GKaoW4D-6t8WHNMg4I3GbJ7oaCVjpomnU06tSwVx9ns9tZeb7pZh3pRsTdyV1OfE7lJa_ZD-DbtD6kxYaTsujHehvuDZzW5laG8l9ZXyol97qEkd8lwry0" alt="类图奉上"></p>
-<p>这里主要需要看到的地方有 </p>
-<p><strong>ComponetActivity</strong></p>
-<p><strong>LifeCycleRegistry</strong></p>
-<p><strong>ReportFragment</strong></p>
-<p>就是这三个角色玩活了Android的生命周期</p>
-<p><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</p>
-<p><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</p>
-<p><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</p>
-<p><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></p>
-<p><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</p>
+<p>就是这三个角色玩活了Android的生命周期 这里主要需要看到的地方有 </p>
+<ul>
+<li><strong>ComponetActivity</strong></li>
+<li><strong>LifeCycleRegistry</strong></li>
+<li><strong>ReportFragment</strong></li>
+</ul>
+<ol>
+<li><strong>ComponetActivity</strong>管理<strong>LifecycleRegistry</strong> 实体类  实现了 <strong>LifecycleOwner</strong>的<strong>getLifecycle()</strong>方法 返回了 <strong>LifeCycleRegister</strong> 实例</li>
+<li><strong>LifecycleRegistry</strong>派生自 <strong>Lifecycle</strong> 扩展了新增删除观察者的功能 内部通过Map进行存储</li>
+<li><strong>ReportFragment</strong> 因为他的生命周期和activity的一致 被巧妙的用来观察生命周期的变化 并下发给Observer</li>
+<li><strong>ObserverWithState</strong>用作管理我们添加的观察者 内部依赖<strong>Lifecycling</strong></li>
+<li><strong>Lifecycling</strong>返回Observer适配器 内部通过反射的方式实现调用我们监听生命周期的方法</li>
+</ol>
 <p>当发生一次生命周期的变化时 由以下顺序调用</p>
-<p><strong>ReportFragment</strong> –&gt;dispatch()   </p>
-<p><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</p>
-<p><strong>ObserverWithState</strong> –&gt;dispatchEvent()</p>
-<p><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</p>
+<ol>
+<li><strong>ReportFragment</strong> –&gt;dispatch()   </li>
+<li><strong>LifeCycleRegistry</strong> –&gt;handleLifecycleEvent()</li>
+<li><strong>ObserverWithState</strong> –&gt;dispatchEvent()</li>
+<li><strong>LifecycleEventObserver</strong> –&gt; onStateChanged()</li>
+</ol>
 <h3 id="为什么第三方框架Glide不用LifeCycle管理生命周期"><a href="#为什么第三方框架Glide不用LifeCycle管理生命周期" class="headerlink" title="为什么第三方框架Glide不用LifeCycle管理生命周期"></a>为什么第三方框架Glide不用LifeCycle管理生命周期</h3><p>原因很简单 看过<strong>ReportFragment</strong>就知道了 利用fragment管理生命周期相当方便 Glide 当然会选择直接自己创建fragment的方式去管理生命周期了</p>
 
       
